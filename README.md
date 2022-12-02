@@ -5,7 +5,7 @@
   <img alt="Natrium Logo" src="./git-assets/LOGO_NAME_DARK.svg" >
 </picture>
 
-=
+====
 
 ### This project is still under intital development
 #### Docs will be out soon
