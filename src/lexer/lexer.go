@@ -6,6 +6,7 @@ import (
 
 const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const NUMBERS = "1234567890"
+
 var KEYWORDS = [...]string{"task", "if", "else", "while", "for", "break", "continue", "return", "do", "end"}
 
 type Lexer struct {
@@ -68,7 +69,9 @@ func (l *Lexer) IdentifierKeywordToken() Token {
 
 	tokenType := "IDENTIFIER"
 
-	if u.ContainsString(KEYWORDS[:], str) {tokenType = "KEYWORD"}
+	if u.ContainsString(KEYWORDS[:], str) {
+		tokenType = "KEYWORD"
+	}
 
 	n := NewToken(tokenType, str, pos, l.currentPos.Copy())
 
@@ -103,6 +106,52 @@ func (l *Lexer) Next() Token {
 	case '^':
 		token = NewToken("OPERATOR", "POWER", pos.Copy(), pos.Advance(c))
 
+	case '!':
+		l.Advance()
+		nPos := l.currentPos.Copy()
+
+		if l.currentChar == '=' {
+			token = NewToken("OPERATOR", "NE", pos.Copy(), nPos.Advance(c))
+		} else {
+			token = NewToken("OPERATOR", "NOT", pos.Copy(), pos.Advance(c))
+		}
+
+	case '<':
+		l.Advance()
+		nPos := l.currentPos.Copy()
+
+		if l.currentChar == '=' {
+			token = NewToken("OPERATOR", "LTE", pos.Copy(), nPos.Advance(c))
+		} else {
+			token = NewToken("OPERATOR", "LT", pos.Copy(), pos.Advance(c))
+		}
+
+	case '>':
+		l.Advance()
+		nPos := l.currentPos.Copy()
+
+		if l.currentChar == '=' {
+			token = NewToken("OPERATOR", "GTE", pos.Copy(), nPos.Advance(c))
+		} else {
+			token = NewToken("OPERATOR", "GT", pos.Copy(), pos.Advance(c))
+		}
+
+	case '=':
+		l.Advance()
+		nPos := l.currentPos.Copy()
+
+		if l.currentChar == '=' {
+			token = NewToken("OPERATOR", "EE", pos.Copy(), nPos.Advance(c))
+		} else {
+			token = NewToken("OPERATOR", "EQL", pos.Copy(), pos.Advance(c))
+		}
+
+	case '&':
+		token = NewToken("OPERATOR", "AND", pos.Copy(), pos.Advance(c))
+
+	case '|':
+		token = NewToken("OPERATOR", "OR", pos.Copy(), pos.Advance(c))
+
 	case u.ContainsByte([]byte(NUMBERS+"."), c):
 		token = l.NumberToken()
 
@@ -134,6 +183,7 @@ func (l *Lexer) Tokenize() []Token {
 		if eof {
 			break
 		}
+
 		var next Token = l.Next()
 
 		if next.Type != "SPACE" {
