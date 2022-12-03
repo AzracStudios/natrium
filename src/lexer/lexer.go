@@ -1,5 +1,13 @@
 package lexer
 
+import (
+	u "natrium/src/utils"
+)
+
+const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const NUMBERS = "1234567890"
+var KEYWORDS = [...]string{"task", "if", "else", "while", "for", "break", "continue", "return", "do", "end"}
+
 type Lexer struct {
 	src         string
 	Tokens      []Token
@@ -11,6 +19,60 @@ func NewLexer(src string) Lexer {
 	return Lexer{
 		src: src,
 	}
+}
+
+func (l *Lexer) NumberToken() Token {
+	var num string = ""
+	var pos Position = l.currentPos.Copy()
+	var c byte = l.currentChar
+	var eof bool = false
+
+	for u.ContainsByte([]byte(NUMBERS+"."), c) != 0 {
+		if eof {
+			break
+		}
+
+		if c == '.' {
+			if u.ContainsByte([]byte(num), '.') != 0 {
+				//TODO: LOG ILLEGAL CHARACTER ERROR
+				eof = l.Advance()
+				return NewToken("ERROR", "_", pos, pos)
+			}
+		}
+
+		num += string(c)
+		eof = l.Advance()
+		c = l.currentChar
+	}
+
+	n := NewToken("NUMBER", num, pos, l.currentPos.Copy())
+
+	return n
+}
+
+func (l *Lexer) IdentifierKeywordToken() Token {
+	var str string = ""
+	var pos Position = l.currentPos.Copy()
+	var c byte = l.currentChar
+	var eof bool = false
+
+	for {
+		if eof || c == ' ' {
+			break
+		}
+
+		str += string(c)
+		eof = l.Advance()
+		c = l.currentChar
+	}
+
+	tokenType := "IDENTIFIER"
+
+	if u.ContainsString(KEYWORDS[:], str) {tokenType = "KEYWORD"}
+
+	n := NewToken(tokenType, str, pos, l.currentPos.Copy())
+
+	return n
 }
 
 func (l *Lexer) Next() Token {
@@ -40,6 +102,12 @@ func (l *Lexer) Next() Token {
 
 	case '^':
 		token = NewToken("OPERATOR", "POWER", pos.Copy(), pos.Advance(c))
+
+	case u.ContainsByte([]byte(NUMBERS+"."), c):
+		token = l.NumberToken()
+
+	case u.ContainsByte([]byte(LETTERS), c):
+		token = l.IdentifierKeywordToken()
 	}
 
 	return token
@@ -48,7 +116,7 @@ func (l *Lexer) Next() Token {
 func (l *Lexer) Advance() bool {
 	l.currentPos.Advance(l.currentChar)
 
-	if l.currentPos.Idx == len(l.src) {
+	if !(l.currentPos.Idx < len(l.src)) {
 		return true
 	}
 
@@ -62,7 +130,10 @@ func (l *Lexer) Tokenize() []Token {
 
 	var eof bool = l.Advance()
 
-	for !eof {
+	for {
+		if eof {
+			break
+		}
 		var next Token = l.Next()
 
 		if next.Type != "SPACE" {
@@ -72,5 +143,6 @@ func (l *Lexer) Tokenize() []Token {
 		eof = l.Advance()
 	}
 
+	tokens = append(tokens, NewToken("FILE", "EOF", l.currentPos.Copy(), l.currentPos.Copy()))
 	return tokens
 }

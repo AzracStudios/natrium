@@ -1,8 +1,8 @@
 package lexer
 
 type Token struct {
-	Type  string  // OPERATOR | FILE
-	Value string
+	Type  string  // OPERATOR | FILE | ERROR | NUMBER
+	Value string 
 	Start Position
 	End   Position
 }
