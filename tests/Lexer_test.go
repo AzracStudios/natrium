@@ -10,7 +10,7 @@ type LexerTest struct {
 	expected []l.Token
 }
 
-var test []LexerTest = []LexerTest{
+var lexerTests []LexerTest = []LexerTest{
 	// CHECK IDENTIFICATION
 	{src: "++--", expected: []l.Token{
 		l.NewToken("OPERATOR", "PLUS", l.NewPosition(0, 0, 0), l.NewPosition(1, 1, 0)),
@@ -69,7 +69,7 @@ var test []LexerTest = []LexerTest{
 }
 
 func TestLexer(t *testing.T) {
-	for _, test := range test {
+	for _, test := range lexerTests {
 		lexer := l.NewLexer(test.src)
 		tokens := lexer.Tokenize()
 
