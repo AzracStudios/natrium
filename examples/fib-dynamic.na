@@ -1,0 +1,24 @@
+load core
+load fmt
+
+~ This is a simple fibonacci program written in the natrium language
+
+task fib (int range) (returns int)  do
+  let int a = 1
+  let int b = 0
+  let int c = 0
+
+  for i in [0:range:1] do
+    c = a
+    a = b + c
+    b = c
+  end
+
+  return a
+end
+
+
+task main (string[] args) (returns int) do 
+  let int fib_res = fib(10)
+  write (fmt(fib_res), stdout)
+end

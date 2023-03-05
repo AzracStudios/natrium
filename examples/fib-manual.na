@@ -1,0 +1,37 @@
+~#! MEMORY_NONE
+
+~ The 'MEMORY_NONE' line dissables the automatic memory management.
+~ Only use this mode if you know what you are doing!
+
+load core
+load fmt
+
+~ This is a simple fibonacci program written in the natrium language
+
+task fib (int range) (returns *int64)  do
+  let *uint64 a = allocate dynamic 
+  let *uint64 b = allocate dynamic
+  let *uint64 c = allocate dynamic
+
+  ~ Use the dynamic keyword when allocating memory, if the variable is modified in the runtime. 
+  ~ Only do this if the maximum memory required is unkown
+
+  move 1 into a
+  move 0 into b
+  move 0 into c
+
+  for i in [0:range:1] do
+    move &a into c
+    move &b + &c into a
+    move &c into b 
+  end
+
+  return a
+end
+
+
+task main (string[] *args) (returns int) do 
+  let *int64 fib_res = fib(10)
+  write (fmt(&fib_res), stdout)
+  return 0
+end

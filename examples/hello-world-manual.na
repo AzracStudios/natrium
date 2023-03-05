@@ -1,0 +1,17 @@
+~#! MEMORY_NONE
+
+~ The 'MEMORY_NONE' line dissables the automatic memory management.
+~ Only use this mode if you know what you are doing!
+
+load core
+
+~ The main function is called automatically during runtime
+
+task main() do
+  let *string hello = allocate dynamic ~ Allocate 14 bytes for the hello world string
+  move "Hello world" into hello
+  
+  write(hello, stdout)
+
+  free hello
+end

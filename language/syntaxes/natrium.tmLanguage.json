@@ -1,0 +1,116 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Natrium",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#operators" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#reserved-words" },
+    { "include": "#ctrl-statements" },
+    { "include": "#keywords" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "begin": "~",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.natrium"
+            }
+          },
+          "end": "\\n",
+          "name": "comment.line.number-sign.natrium"
+        }
+      ]
+    },
+    "ctrl-statements": {
+      "patterns": [
+        {
+          "name": "keyword.control.natrium",
+          "match": "\\b(if|else|while|for|return|break|then|do|end)\\b"
+        }
+      ]
+    },
+    "reserved-words": {
+      "name": "entity.name.function.member.natrium",
+      "match": "\\b(int8|uint8|int16|uint16|int32|uint32|int64|uint64|int|uint|float8|float8|float16|float16|float32|float32|float64|float64|float|string|hash|write|read|stdin|stdout|dynamic)\\b"
+    },
+
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.natrium",
+          "match": "\\b(task|let|load|in|returns|free|allocate|delete|move|into)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "keyword.other.unit.suffix.integer.natrium",
+          "match": "(^-?[0-9][0-9\\.]+$)"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.natrium",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.natrium",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "expression": {
+      "patterns": [
+        { "include": "#reserved-words" },
+        { "include": "#numbers" },
+        { "include": "#paren-expression" },
+        { "include": "#strings" }
+      ]
+    },
+    "paren-expression": {
+      "patterns": [
+        {
+          "captures": {
+            "1": {
+              "name": "entity.name.function.natrium"
+            }
+          },
+          "name": "punctuation.definition.parameters.natrium",
+          "match": "\\b(\\w+)(?:\\s+([-a-zA-Z0-9_] + ))?\\s*(\\()",
+          "patterns": [{ "include": "#expression" }]
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.increment.natrium",
+          "match": "\\+\\+"
+        },
+        {
+          "name": "keyword.operator.decrement.natrium",
+          "match": "--"
+        },
+        {
+          "name": "keyword.operator.assignment.compound.natrium",
+          "match": "%=|\\+=|-=|\\*=|(?<!\\()/="
+        },
+        {
+          "name": "keyword.operator.comparison.natrium",
+          "match": "!=|<=|>=|==|<|>"
+        },
+        {
+          "name": "keyword.operator.natrium",
+          "match": "%|\\*|/|-|\\+"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.na"
+}

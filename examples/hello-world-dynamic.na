@@ -1,0 +1,7 @@
+load core
+
+~ The main function is called automatically during runtime
+
+task main() do
+  write("Hello world!", stdout)
+end

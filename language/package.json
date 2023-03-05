@@ -1,0 +1,39 @@
+{
+  "name": "natrium",
+  "displayName": "Natrium",
+  "description": "Syntax highlighting support for the natrium programming language",
+  "autor": "Azrac Studios",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "natrium",
+        "aliases": [
+          "Natrium",
+          "natrium"
+        ],
+        "extensions": [
+          ".na"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "dark": "./file-icon-dark.png",
+          "light": "./file-icon-light.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "natrium",
+        "scopeName": "source.na",
+        "path": "./syntaxes/natrium.tmLanguage.json"
+      }
+    ]
+  }
+}
