@@ -46,7 +46,6 @@ task main (string[] args) (returns int) do
   let int fib_res = fib(10)
   write (fmt(fib_res), stdout)
 end
-
 ```
 
 Here are the same programs, but with manual memory management:
