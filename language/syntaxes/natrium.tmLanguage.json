@@ -35,14 +35,14 @@
     },
     "reserved-words": {
       "name": "entity.name.function.member.natrium",
-      "match": "\\b(int8|uint8|int16|uint16|int32|uint32|int64|uint64|int|uint|float8|float8|float16|float16|float32|float32|float64|float64|float|string|hash|write|read|stdin|stdout|dynamic)\\b"
+      "match": "\\b(int8|uint8|int16|uint16|int32|uint32|int64|uint64|int|uint|float8|float16|float16|float32|float32|float64|float64|float|string|hash|write|read|throw|main|stdin|stdout|dynamic|nil)\\b"
     },
 
     "keywords": {
       "patterns": [
         {
           "name": "keyword.control.natrium",
-          "match": "\\b(task|let|load|in|returns|free|allocate|delete|move|into)\\b"
+          "match": "\\b(task|let|load|in|returns|free|allocate|delete|move|into|and|or)\\b"
         }
       ]
     },
