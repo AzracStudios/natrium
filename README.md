@@ -14,71 +14,21 @@ load core
 
 ~ The main function is called automatically during runtime
 
-task main() do
-  write("Hello world!", stdout)
-end
-```
-
-Fibonacci:
-
-```
-load core
-load fmt
-
-~ This is a simple fibonacci program written in the natrium language
-
-task fib (int range) (returns int)  do
-  let int a = 1
-  let int b = 0
-  let int c = 0
-
-  for i in [0:range:1] do
-    c = a
-    a = b + c
-    b = c
-  end
-
-  return a
-end
-
-
-task main (string[] args) (returns int) do
-  let int fib_res = fib(10)
-  write (fmt(fib_res), stdout)
-end
-```
-
-Here are the same programs, but with manual memory management:
-
-Hello world:
-
-```
-~#! MEMORY_NONE
-
-~ The 'MEMORY_NONE' line dissables the automatic memory management.
-~ Only use this mode if you know what you are doing!
-
-load core
-
-~ The main function is called automatically during runtime
-
-task main() do
+task main(*string[] args) (returns int) do
   let *string hello = allocate 14 ~ Allocate 14 bytes for the hello world string
   move "Hello, world!\n" into hello
 
   write(hello, stdout)
 
   free hello
+
+  return 0
 end
 ```
 
 Fibonacci:
 
-```~#! MEMORY_NONE
-
-~ The 'MEMORY_NONE' line dissables the automatic memory management.
-~ Only use this mode if you know what you are doing!
-
+```
 load core
 load fmt
 
@@ -104,7 +54,6 @@ task fib (int range) (returns *int64)  do
 
   return a
 end
-
 
 task main (string[] *args) (returns int) do
   let *int64 fib_res = fib(10)

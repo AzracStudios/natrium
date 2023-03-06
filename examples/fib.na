@@ -1,8 +1,3 @@
-~#! MEMORY_NONE
-
-~ The 'MEMORY_NONE' line dissables the automatic memory management.
-~ Only use this mode if you know what you are doing!
-
 load core
 load fmt
 
