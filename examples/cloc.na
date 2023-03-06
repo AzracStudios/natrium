@@ -1,0 +1,51 @@
+load core
+load fmt
+
+task get_lines(*string path) (returns *int) do
+  ~ Allocate memory for a string that is 1 KB long
+  let *string input = allocate 1024
+  let *uint64 lines = allocate dynamic
+
+  ~ Load file at path
+  move read(&path, "utf-8", 1024) into input
+
+  ~ Count lines
+  for i in input do
+    if i == "\n" then
+      move &lines + 1 into lines
+    end
+  end
+
+  ~ Free variables
+  free input
+
+  ~ Return line count
+  return lines
+end
+
+task main(string[] args) (returns int) do
+  ~ Get path from args
+  let *string path = allocate 512
+
+  ~ Check if path exists
+  if args[1] == nil then
+    throw ("Expected path!")
+    return 0
+  end
+
+  move args[1] into path
+
+  ~ Call get_lines function and store the value
+  let *int lines = get_lines(path)
+
+  ~ Print the number of lines
+  write(fmt(&lines), stdout)
+
+  ~ Free variables
+  free lines
+  free path
+
+  ~ Return success
+  return 0
+end 
+

@@ -2,13 +2,9 @@ load core
 
 ~ The main function is called automatically during runtime
 
-task main(string[] *args) (returns int) do
-  let *string hello = allocate 14 ~ Allocate 14 bytes for the hello world string
-  move "Hello world" into hello
-  
+task main(string[] args) (returns int) do
+  let string hello = "Hello world!"  
   write(hello, stdout)
-
-  free hello
-
+  
   return 0
 end
