@@ -23,9 +23,9 @@
         ],
         "configuration": "./language-configuration.json",
         "icon": {
-          "dark": "./file-icon-dark.png",
-          "light": "./file-icon-light.png"
-        }
+          "dark": "./na-file-icon-dark.svg",
+          "light": "./na-file-icon-light.svg"
+	}
       }
     ],
     "grammars": [

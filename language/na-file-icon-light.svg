@@ -1,0 +1,14 @@
+<svg width="2000" height="2000" viewBox="0 0 2000 2000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="149" y="149" width="1702" height="1702" rx="851" stroke="black" stroke-width="22"/>
+<rect x="561" y="561" width="878" height="878" rx="439" stroke="black" stroke-width="22"/>
+<rect x="925" y="63" width="200" height="200" rx="100" fill="black"/>
+<rect x="925" y="1787" width="200" height="200" rx="100" fill="black"/>
+<rect x="1534.53" y="315.474" width="200" height="200" rx="100" fill="black"/>
+<rect x="315.474" y="1534.53" width="200" height="200" rx="100" fill="black"/>
+<rect x="315.474" y="515.474" width="200" height="200" rx="100" transform="rotate(-90 315.474 515.474)" fill="black"/>
+<rect x="1534.53" y="1734.53" width="200" height="200" rx="100" transform="rotate(-90 1534.53 1734.53)" fill="black"/>
+<rect x="63" y="1075" width="200" height="200" rx="100" transform="rotate(-90 63 1075)" fill="black"/>
+<rect x="1751" y="1075" width="200" height="200" rx="100" transform="rotate(-90 1751 1075)" fill="black"/>
+<rect x="556.22" y="678.141" width="200" height="200" rx="100" transform="rotate(-45 556.22 678.141)" fill="black"/>
+<rect x="1174.94" y="1296.86" width="200" height="200" rx="100" transform="rotate(-45 1174.94 1296.86)" fill="black"/>
+</svg>
