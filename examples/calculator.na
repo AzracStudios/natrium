@@ -1,0 +1,42 @@
+task main(string[] args) (returns int) do
+    
+    write("num 1: ", stdout)
+    let int num1 = allocate 32
+    move read(stdin) cast int into num1
+
+    write("num 2: ", stdout)
+    let int num2 = allocate 32
+    move read(stdin) cast int into num2
+
+    write("operation: ", stdout)
+    let string operation = allocate 4
+    move read(stdin) into operation
+
+    let int res = allocate 64
+
+    switch operation do
+        case "+" do
+            move num1 + num2 into res
+        end
+
+        case "-" do
+            move num1 - num2 into res
+        end
+
+        case "*" do
+            move num1 * num2 into res
+        end
+
+        case "/" do
+            if num2 == 0 then
+                throw ("Division by 0!")
+            end
+
+            move num1 / num2 into res
+        end
+    end
+
+    write (fmt(res), stdout)
+    return 0
+    
+end
