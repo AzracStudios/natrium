@@ -14,14 +14,10 @@ load core
 
 ~ The main function is called automatically during runtime
 
-task main(*string[] args) (returns int) do
-  let *string hello = allocate 14 ~ Allocate 14 bytes for the hello world string
-  move "Hello, world!\n" into hello
-
+task main(string[] args) (returns int) do
+  let string hello = "Hello world!"  
   write(hello, stdout)
-
-  free hello
-
+  
   return 0
 end
 ```
@@ -34,84 +30,70 @@ load fmt
 
 ~ This is a simple fibonacci program written in the natrium language
 
-task fib (int range) (returns *int64)  do
-  let *uint64 a = allocate dynamic
-  let *uint64 b = allocate dynamic
-  let *uint64 c = allocate dynamic
+task fib (uint64 n) (returns uint64)  do
+  let uint64 a = 1
+  let uint64 b = 0
+  let uint64 c = 0
 
-  ~ Use the dynamic keyword when allocating memory, if the variable is modified in the runtime.
-  ~ Only do this if the maximum memory required is unkown
-
-  move 1 into a
-  move 0 into b
-  move 0 into c
-
-  for i in [0:range:1] do
-    move &a into c
-    move &b + &c into a
-    move &c into b
+  for i in range(0, n) do
+    a = c
+    b + c = a
+    c = b 
   end
 
   return a
 end
 
-task main (string[] *args) (returns int) do
-  let *int64 fib_res = fib(10)
-  write (fmt(&fib_res), stdout)
+
+task main (string[] args) (returns int) do 
+  let int64 fib_res = fib(10)
+  write (fmt(fib_res), stdout)
   return 0
 end
 ```
 
-Line counter:
+Calculator:
 ```
-load core
-load fmt
-
-task get_lines(*string path) (returns *int) do
-  ~ Allocate memory for a string that is 1 KB long
-  let *string input = allocate 1024
-  let *uint64 lines = allocate dynamic
-
-  ~ Load file at path
-  move read(&path, "utf-8", 1024) into input
-
-  ~ Count lines
-  for i in input do
-    if i == "\n" then
-      move &lines + 1 into lines
-    end
-  end
-
-  ~ Free variables
-  free input
-
-  ~ Return line count
-  return lines
-end
-
 task main(string[] args) (returns int) do
-  ~ Get path from args
-  let *string path = allocate 512
+    
+    write("num 1: ", stdout)
+    let int num1 = allocate 32
+    move read(stdin) cast int into num1
 
-  ~ Check if path exists
-  if args[1] == nil then
-    throw ("Expected path!")
+    write("num 2: ", stdout)
+    let int num2 = allocate 32
+    move read(stdin) cast int into num2
+
+    write("operation: ", stdout)
+    let string operation = allocate 4
+    move read(stdin) into operation
+
+    let int res = allocate 64
+
+    switch operation do
+        case "+" do
+            move num1 + num2 into res
+        end
+
+        case "-" do
+            move num1 - num2 into res
+        end
+
+        case "*" do
+            move num1 * num2 into res
+        end
+
+        case "/" do
+            if num2 == 0 then
+                throw ("Division by 0!")
+            end
+
+            move num1 / num2 into res
+        end
+    end
+
+    write (fmt(res), stdout)
     return 0
-  end
-
-  move args[1] into path
-
-  ~ Call get_lines function and store the value
-  let *int lines = get_lines(path)
-
-  ~ Print the number of lines
-  write(fmt(&lines), stdout)
-
-  ~ Free variables
-  free lines
-  free path
-
-  ~ Return success
-  return 0
-end 
+    
+end
 ```
