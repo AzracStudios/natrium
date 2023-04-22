@@ -1,25 +1,28 @@
 load core
 load fmt
 
-~ This is a simple fibonacci program written in the natrium language
-
-task fib (uint64 n) (returns uint64)  do
-  let uint64 a = 1
-  let uint64 b = 0
-  let uint64 c = 0
+task fib (int n) (returns int)  do
+  let int a = 1
+  let int b = 0
+  let int c = 0
 
   for i in range(0, n) do
-    a = c
-    b + c = a
-    c = b 
+    a = b + c
+    b = c
+    c = a
   end
+
+  free b
+  free c
 
   return a
 end
 
 
 task main (string[] args) (returns int) do 
-  let int64 fib_res = fib(10)
+  let int fib_res : allocate 64 = fib(10)
+  
   write (fmt(fib_res), stdout)
+
   return 0
 end

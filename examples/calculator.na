@@ -1,30 +1,27 @@
 task main(string[] args) (returns int) do
     
     write("num 1: ", stdout)
-    let int num1 = allocate 32
-    move read(stdin) cast int into num1
+    let int num1 = read(stdin) cast int
 
     write("num 2: ", stdout)
-    let int num2 = allocate 32
-    move read(stdin) cast int into num2
+    let int num2 = read(stdin) cast int
 
     write("operation: ", stdout)
-    let string operation = allocate 4
-    move read(stdin) into operation
+    let string operation = read(stdin)
 
-    let int res = allocate 64
+    let int res = 0
 
     switch operation do
         case "+" do
-            move num1 + num2 into res
+            res = num1 + num2
         end
 
-        case "-" do
-            move num1 - num2 into res
+        case "-" do 
+            res = num1 - num2
         end
 
         case "*" do
-            move num1 * num2 into res
+            res = num1 * num2
         end
 
         case "/" do
@@ -32,7 +29,7 @@ task main(string[] args) (returns int) do
                 throw ("Division by 0!")
             end
 
-            move num1 / num2 into res
+            res = num1 / num2
         end
     end
 
