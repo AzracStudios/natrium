@@ -398,10 +398,11 @@ class Lexer:
             start_position = self.position.copy()
             is_float = False
 
+            # nums 0 through 9 or a decimal point
             while re.match("[0-9]|\.", self.char or "EOF"):
                 if self.char == ".":
                     if is_float:
-                        print("ERR OCCOURED")
+                        #TODO: implement illegal char err
                         return
 
                     is_float = True
@@ -435,6 +436,8 @@ class Lexer:
                 self.should_advance_next_ittr = True
 
         return self.tokens
+
+
 
 
 ##########################
@@ -613,7 +616,7 @@ class BinaryOperatorIR:
         if check_type(left, BinaryOperatorIR):
             self.code += left.code
 
-            ## a:BINOP_IR op b:BINOP_IR
+            ## a:BINOP_IR op:TOKEN b:BINOP_IR
             ## compute a
             ## result of a -> rcx
             ## compute b
@@ -621,6 +624,7 @@ class BinaryOperatorIR:
             ## result of a in rcx -> rax
             ## compute (a op b)
             ## result (a op b) -> rax
+
             if check_type(right, BinaryOperatorIR):
                 self.code += f"mov rcx, rax\n"
                 self.code += right.code
@@ -637,12 +641,13 @@ class BinaryOperatorIR:
 
         
         if check_type(left, NumberIR):
-            ## a:NUMBER_IR op b:BINOP_IR
+            ## a:NUMBER_IR op:TOKEN b:BINOP_IR
             ## compute b
             ## result of b in rax -> rcx
             ## number a -> rax
             ## compute (a op b)
             ## result (a op b) -> rax
+
             if check_type(right, BinaryOperatorIR):
                 self.code += right.code
                 self.code += f"mov rcx, rax\n"
@@ -663,9 +668,10 @@ class BinaryOperatorIR:
         
         ## a:NUMBER_IR op b:NUMBER_IR
         ## number a -> rax
-        ## number b -> rbx ?
+        ## number b -> rbx ? mul || div
         ## compute (a op b)
         ## result (a op b) -> rax
+
         if check_type(right, NumberIR):
             if op == TT_PLUS:
                 self.code += f"add rax, {right.code}\n"
