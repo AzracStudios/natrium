@@ -28,28 +28,32 @@ Fibonacci:
 load core
 load fmt
 
-~ This is a simple fibonacci program written in the natrium language
-
-task fib (uint64 n) (returns uint64)  do
-  let uint64 a = 1
-  let uint64 b = 0
-  let uint64 c = 0
+task fib (int n) (returns int)  do
+  let int a = 1
+  let int b = 0
+  let int c = 0
 
   for i in range(0, n) do
-    a = c
-    b + c = a
-    c = b 
+    a = b + c
+    b = c
+    c = a
   end
+
+  free b
+  free c
 
   return a
 end
 
 
 task main (string[] args) (returns int) do 
-  let int64 fib_res = fib(10)
+  let int fib_res : allocate 64 = fib(10)
+  
   write (fmt(fib_res), stdout)
+
   return 0
 end
+
 ```
 
 Calculator:
@@ -57,30 +61,27 @@ Calculator:
 task main(string[] args) (returns int) do
     
     write("num 1: ", stdout)
-    let int num1 = allocate 32
-    move read(stdin) cast int into num1
+    let int num1 = read(stdin) cast int
 
     write("num 2: ", stdout)
-    let int num2 = allocate 32
-    move read(stdin) cast int into num2
+    let int num2 = read(stdin) cast int
 
     write("operation: ", stdout)
-    let string operation = allocate 4
-    move read(stdin) into operation
+    let string operation = read(stdin)
 
-    let int res = allocate 64
+    let int res = 0
 
     switch operation do
         case "+" do
-            move num1 + num2 into res
+            res = num1 + num2
         end
 
-        case "-" do
-            move num1 - num2 into res
+        case "-" do 
+            res = num1 - num2
         end
 
         case "*" do
-            move num1 * num2 into res
+            res = num1 * num2
         end
 
         case "/" do
@@ -88,7 +89,7 @@ task main(string[] args) (returns int) do
                 throw ("Division by 0!")
             end
 
-            move num1 / num2 into res
+            res = num1 / num2
         end
     end
 
