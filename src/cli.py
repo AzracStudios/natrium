@@ -39,15 +39,12 @@ usage: python3 natrium.py [src] [-h help] [-v version] [-k keep]
             src = "\n".join(map(str, f.readlines()))
 
             lexer = Lexer(src)
-            toks = lexer.tokenize()
-
-            if type(toks).__name__ == "IllegalCharError":
-                return print(toks.fmt(src, file_name))
+            toks, err = lexer.tokenize()
+            if err: return print(err.fmt(src, file_name))
 
             parser = Parser(toks)
             parser_res = parser.parse()
-            if parser_res.error:
-                return print(parser_res.error.fmt(src, file_name))
+            if parser_res.error: return print(parser_res.error.fmt(src, file_name))
 
             code_gen = CodeGen()
             code_gen_res = code_gen.visit(parser_res.node)

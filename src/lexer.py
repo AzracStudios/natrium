@@ -23,39 +23,39 @@ class Lexer:
     def next(self):
         # NEWLINE
         if self.char == "\n":
-            return Token(TT_NEWLINE, self.position)
+            return Token(TT_NEWLINE, self.position), None
 
         # SPACE
         if self.char == " ":
-            return None
+            return Token(TT_SPACE, self.position), None
 
         ## LPAREN
         if self.char == "(":
-            return Token(TT_LPAREN, self.position)
+            return Token(TT_LPAREN, self.position), None
 
         ## RPAREN
         if self.char == ")":
-            return Token(TT_RPAREN, self.position)
+            return Token(TT_RPAREN, self.position), None
 
         ## PLUS
         if self.char == "+":
-            return Token(TT_PLUS, self.position)
+            return Token(TT_PLUS, self.position), None
 
         ## MINUS
         if self.char == "-":
-            return Token(TT_MINUS, self.position)
+            return Token(TT_MINUS, self.position), None
 
         ## MUL
         if self.char == "*":
-            return Token(TT_MUL, self.position)
+            return Token(TT_MUL, self.position), None
 
         ## DIV
         if self.char == "/":
-            return Token(TT_DIV, self.position)
+            return Token(TT_DIV, self.position), None
 
         ## POW
         if self.char == "^":
-            return Token(TT_POW, self.position)
+            return Token(TT_POW, self.position), None
 
         ## INT | FLOAT
         if re.match("[0-9]", self.char):
@@ -67,8 +67,7 @@ class Lexer:
             while re.match("[0-9]|\.", self.char or "EOF"):
                 if self.char == ".":
                     if is_float:
-                        #TODO: implement illegal char err
-                        return
+                        return None, IllegalCharError(self.position.copy(), self.position.copy.advance(), ".")
 
                     is_float = True
 
@@ -82,22 +81,19 @@ class Lexer:
                 start_position,
                 end_position=self.position.copy(),
                 value=float(num_str) if is_float else int(num_str),
-            )
+            ), None
 
     def tokenize(self):
         while self.char != None:
-            next = self.next()
+            next, err = self.next()
+            if err: return None, err
 
-            if next != None:
+            if next.type != TT_SPACE:
                 self.tokens.append(next)
-            elif self.char != " ":
-                return IllegalCharError(self.position.copy(),
-                                        self.position.copy().advance(),
-                                        self.char)
-
+            
             if self.should_advance_next_ittr:
                 self.advance()
             else:
                 self.should_advance_next_ittr = True
 
-        return self.tokens
+        return self.tokens, None
