@@ -44,6 +44,7 @@ TT_DIV = "DIV"
 TT_POW = "POW"
 
 TT_NEWLINE = "NEWLINE"
+TT_SPACE = "SPACE"
 
 
 class Token:
