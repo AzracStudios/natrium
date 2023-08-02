@@ -3,7 +3,7 @@
 
 A compiled language designed with the simplicity of Python, syntax of Basic and fine control & performance of C in mind. The language is still under-development, so I do not recommend that you use it now. Documentation and tutorials will be out soon!
 
-But if you do want to play around with it, the syntax highlighting is currently available for vscode, in the language directly. To install it, use the 'Developer: Install Extension From Location...' command from the command palette, and select the 'language' directory
+But if you do want to play around with it, the syntax highlighting is currently available for vscode, in the language directory. To install it, use the 'Developer: Install Extension From Location...' command from the command palette, and select the 'language' directory
 
 Until then, here are some previews of Nartium (files in the examples directory):
 
