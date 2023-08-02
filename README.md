@@ -1,7 +1,7 @@
 ![Natrium Logo](./assets/gthub-header-dark.svg#gh-dark-mode-only)
 ![Natrium Logo](./assets/gthub-header-light.svg#gh-light-mode-only)
 
-A compiled language designed with the simplicity of Python, syntax of Basic and fine control & performance of C in mind. The language is still under-development, so I do not recommend that you use it now. The language is scheduled to enter open beta by September. Documentation and tutorials will be out soon!
+A compiled language designed with the simplicity of Python, syntax of Basic and fine control & performance of C in mind. The language is still under-development, so I do not recommend that you use it now. Documentation and tutorials will be out soon!
 
 But if you do want to play around with it, the syntax highlighting is currently available for vscode, in the language directly. To install it, use the 'Developer: Install Extension From Location...' command from the command palette, and select the 'language' directory
 
